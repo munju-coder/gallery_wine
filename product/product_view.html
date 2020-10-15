@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Gallery wine</title>
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../js/COMMON.js"></script>
+    <script src="../js/main.js"></script>
+    <!--goolge webfont-->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <!--css-->
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/grid.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<script>
+    $(document).ready( function(){
+        $('.cart_submit').click( function(){
+            alert('장바구니에 담으시겠습니까?');
+        });
+    });
+</script>
+<body>
+    <!--wrap {-->
+    <div class="wrap">
+        <!--bg call-->
+        <div class="modal_background"></div>
+        <div class="header_wrap">
+            <header class="mlr_32px">
+                <div class="h_left">
+                    <img class="mr10px" src="../images/instargram_icon.png" alt="instargram icon">
+                    <img src="../images/facebook_icon.png" alt="facebook icon">
+                </div>
+                <div class="h_middle t_center"><a href="#" class="t_center"><img src="../images/logo.png" alt="gallery wine logo image"></a></div>
+                <div class="h_right t_right">
+                    <a href="../cart/cart.html"><img class="mr10px" src="../images/cart_icon.png" alt="cart icon image"></a>
+                    <img id="menu_btn" class="cursor_p" src="../images/menu_icon.png" alt="menu icon">
+                </div>
+            </header>
+        </div>
+
+        <aside>
+            <div class="close_btn cursor_p"><img src="../images/close_btn.png" alt="close btn"></div>
+            <ul>
+                <li><a href="#">갤러리와인 소개</a></li>
+                <li><a href="#">신메뉴</a></li>
+                <li><a href="#">전체메뉴</a></li>
+                <li><a href="#">소식/이벤트</a></li>
+                <li><a href="#">창업안내</a></li>
+            </ul>
+        </aside>
+
+        <!--contents {-->
+        <section class="contents pro_contents">
+            <!--c_top {-->
+            <div class="c_top">
+                <img src="../images/steak_view_1.png" alt="">
+            </div>
+            <!--} c_top-->
+            
+            <div class="pro_txt">
+                <h2>
+                    <p>갈릭립아이 스테이크</p>
+                    <p class="fw_bold"><span id="pd_price">45,000</span>원</p>
+                </h2>
+
+                <div class="option">
+                    <p class="f23 fw_bold mb30px">추가 옵션</p>
+                    <div class="mb30px">
+                        <p class="f23">매장주문</p>
+                        <p class="f25 fw_bold"><span id="option_price">0</span>원 <input type="radio" id="packing_chk_N" name="packing_chk" value="N" packing_price="0" checked></p>
+                    </div>
+
+                    <div>
+                        <p class="f23">포장하기</p>
+                        <p class="f25 fw_bold"><span>0</span>원 <input type="radio" id="packing_chk_Y" name="packing_chk" value="Y" packing_price="0"></p>
+                    </div>
+                </div>
+                
+                <div class="pro_mount">
+                    <p class="f23">수량</p>
+                    <div class="count_box over_hidden">
+                        <div class="count_input over_hidden"> 
+                            <input type="button" value="-" id="minus">
+                            <input type="text" id="cnt" name="amount[]" class="cnt_input" value="1" readonly="">
+                            <input type="button" id="plus" value="+">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total_price">
+                    <ul>
+                        <li class="f28 fw_bold">총 주문금액</li>
+                        <li class="f28 fw_bold"><span id="total_price">45,000</span>원</li>
+                    </ul>
+                </div>
+
+                <div class="protxt_bottom">
+                    <a href="../cart/cart.html" class="f25"><div class="cart_submit" id="cart_btn">장바구니 담기</div></a>
+                    <a href="../order/order_complete.html" class="f25"><div class="order_submit" id="order_btn">주문하기</div></a>
+                </div>
+            </div>
+        </section>
+        <!--} contents-->
+    
+        <script>
+            $(document).ready( function(){
+
+                var pd_price = parseInt(COMMON.form.str_num($("#pd_price").text()));    //상품가격
+                var packing_chk = $("input:radio[name=packing_chk]:checked").val();    // 포장여부
+                
+                var packing_price = parseInt(COMMON.form.str_num($("input:radio[name=packing_chk]:checked").attr("packing_price")));   //초기 설정값
+
+                var packing_price_N = parseInt(COMMON.form.str_num($("#packing_chk_N").attr("packing_price"))); //옵션 N일때의 값
+                var packing_price_Y = parseInt(COMMON.form.str_num($("#packing_chk_Y").attr("packing_price"))); //옵션 Y일때의 값
+
+                // var option = parseInt(COMMON.form.str_num($("#option_price").text())); //옵션가격
+
+                var total_price = parseInt(COMMON.form.str_num($("#total_price").text()));  //총가격
+                var amount = parseInt(COMMON.form.str_num($("#cnt").val()));    //수량
+
+
+                //라디오 버튼 클릭시 옵션 가격 변경
+                $("input:radio[name=packing_chk]").click(function(){
+                    packing_chk = $(this).val();
+                    packing_price = parseInt(COMMON.form.str_num($(this).attr("packing_price")));
+
+                    if(packing_chk == "Y"){
+                        total_price += packing_price_Y;
+                    }else {
+                        total_price -= (packing_price_Y + packing_price );
+                    }
+
+                    $("#total_price").text(COMMON.form.comma(total_price));
+                });
+
+                $("#plus").click(function(){
+                    // alert('s');
+                    amount += 1;
+                    total_price = pd_price * amount;
+
+                    if(packing_chk == "Y") {
+                        total_price += packing_price;
+                    }
+                    $("#cnt").val(amount);
+                    $("#total_price").text(COMMON.form.comma(total_price));
+                });
+
+                $("#minus").click(function(){
+                    amount -= 1;
+                    total_price = total_price - pd_price;
+                    if(amount < 1) {
+                        amount = 1;
+                        total_price = pd_price;
+                        alert("최소 구매수량은 1개입니다.");
+                        return false;
+                    }
+                    $("#cnt").val(amount);
+                    $("#total_price").text(COMMON.form.comma(total_price));
+                });
+            }); 
+        </script>
+
+        <!--footer {-->
+        <footer>
+            <div class="ft_wrap dw_576px">
+                <div class="ft_top">
+                    <ul>
+                        <!--해당li의 서브페이지가 없으므로 a태그 넣지않았음(추후수정)-->
+                        <li class="t_center">CS / 고객센터</li>
+                        <li class="t_center">서비스 이용약관</li>
+                        <li class="t_center">개인정보처리방침</li>
+                    </ul>
+                </div>
+
+                <div class="ft_bottom">
+                    <ul>
+                        <li><strong>갤러리와인</strong> &nbsp; 대표이사 김와인</li>
+                        <li>주소: 경기도 광명시 오리로길 619번길 11 (하안동 232번지) 예원빌딩</li>
+                        <li>팩스 : 02-897-8952 개인정보 보호책임자 : 김와인</li>
+                        <li>Copyright © 2020 gallery wine. All Rights Reserved.</li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <!--} footer-->
+    </div>
+    <!--} wrap-->
+    
+</body>
+</html>
