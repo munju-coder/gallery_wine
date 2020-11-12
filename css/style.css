@@ -33,7 +33,7 @@ input { outline: none; }
 .dw_576px { width: 100%; max-width: 576px; margin: 0 auto; }
 
 .wrap { position: relative; width: 640px; overflow: hidden; margin: 0 auto; }
-.modal_background { display:none; position: absolute; top: 0; left: 0; width: 640px; height: 100%; background-color: rgba(0, 0, 0, 0.486); z-index: 10; }
+.modal_background { display: none; position: absolute; top: 0; left: 0; width: 640px; height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.486); z-index: 10; }
 .wrap .header_wrap { padding-top: 27px; padding-bottom: 22px; background-color: #76173d;  }
 .wrap .header_wrap header div { float: left; width: 33%; }
 .wrap .header_wrap header .h_middle { margin-top: 6px; }
@@ -42,7 +42,9 @@ input { outline: none; }
 .wrap .contents .c_middle ul li { margin-bottom: 50px; }
 .wrap .contents .c_middle ul li:last-child { margin-bottom: 0; }
 
-.wrap aside { display: none; position: absolute; width: 477px; top: 0; right: 0; background-color: #76173ddb; opacity: 0.95; z-index: 20; }
+/* .wrap aside { display: none; position: absolute; width: 477px; top: 0; right: 0; background-color: #76173ddb; opacity: 0.95; z-index: 20; transition: .3s; } */
+.wrap aside { /* display: none; */width: 477px; position: absolute; top: 0; right: -520px; background-color: #76173ddb; opacity: 0.95; z-index: 20; transition: right .5s; }
+
 .wrap aside ul li { padding: 20px 0 20px 30px; border-bottom: 1px solid #ddd; }
 .wrap aside ul li a { color: #ffffff; font-size: 25px; }
 .wrap aside ul li:first-child { padding-top: 40px; }
